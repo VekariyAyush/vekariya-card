@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>વેકરીયા પરિવાર આમંત્રણ કાર્ડ</title>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Vadodara:wght@400;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Vadodara:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --maroon: #7b0d0d;
+            --maroon: #740a0a;
             --gold: #c5a059;
-            --cream: #fff9f0;
+            --bg-cream: #fff9f0;
         }
 
         body {
@@ -22,10 +21,10 @@
             padding: 20px;
         }
 
-        /* મેઈન કાર્ડ કન્ટેનર */
-        #invitation-card {
+        /* મેઈન કાર્ડ એરિયા */
+        #card-container {
             width: 450px;
-            background-color: var(--cream);
+            background-color: var(--bg-cream);
             border: 2px solid var(--gold);
             position: relative;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
@@ -33,124 +32,129 @@
             overflow: hidden;
         }
 
-        /* ઉપરનો મરૂન ભાગ */
-        .header-bg {
+        /* બેકગ્રાઉન્ડ મંડલા આર્ટ (સાઇડમાં) */
+        .mandala {
+            position: absolute;
+            width: 200px;
+            opacity: 0.15;
+            z-index: 0;
+        }
+        .mandala-left { top: 20%; left: -100px; }
+        .mandala-right { top: 40%; right: -100px; }
+
+        /* ઉપરનો લાલ ભાગ */
+        .header-section {
             background-color: var(--maroon);
             color: white;
-            padding: 30px 10px 80px 10px;
-            clip-path: ellipse(100% 70% at 50% 30%);
+            padding: 30px 10px 80px;
+            clip-path: ellipse(110% 70% at 50% 30%);
+            position: relative;
+            z-index: 1;
         }
 
-        .header-bg h1 { margin: 0; font-size: 28px; letter-spacing: 1px; }
-        .header-bg h2 { margin: 5px 0; font-size: 20px; font-weight: normal; }
-        .header-bg p { margin: 10px 0 0; font-size: 16px; opacity: 0.9; }
+        .header-section h1 { margin: 0; font-size: 32px; letter-spacing: 1px; }
+        .header-section h2 { margin: 5px 0; font-size: 22px; font-weight: 500; }
+        .header-section p { margin: 10px 0 0; font-size: 16px; opacity: 0.9; line-height: 1.4; }
 
-        /* ફોટો ફ્રેમ (ગોળ) */
-        .photo-frame {
-            width: 180px;
-            height: 180px;
-            background: #fff;
+        /* ફોટો ફ્રેમ */
+        .profile-frame {
+            width: 190px;
+            height: 190px;
+            background: white;
             border: 6px solid var(--gold);
             border-radius: 50%;
-            margin: -70px auto 20px auto;
+            margin: -75px auto 20px;
             position: relative;
             z-index: 2;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        #user-photo {
+        #user-img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* ફોટો ખેંચાશે નહીં, બરાબર ફિટ થશે */
+            object-fit: cover;
             display: none;
         }
 
-        .placeholder-text { color: #888; font-size: 14px; padding: 10px; }
+        .placeholder { color: #888; font-size: 14px; }
 
-        /* બોડી લખાણ */
-        .content { padding: 0 30px 30px 30px; }
+        /* લખાણ */
+        .content-area { padding: 10px 30px 30px; position: relative; z-index: 1; }
 
-        .main-quote {
+        .slogan {
             color: var(--maroon);
-            font-size: 26px;
-            font-weight: bold;
-            margin: 10px 0;
-            line-height: 1.4;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.3;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
         }
 
-        .sub-text {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 25px;
-            font-weight: 600;
-        }
+        .invite-text { font-size: 19px; font-weight: 600; color: #333; margin-bottom: 25px; }
 
-        .event-details {
+        .info-box {
             border-top: 1px solid var(--gold);
             border-bottom: 1px solid var(--gold);
             padding: 15px 0;
             margin-bottom: 20px;
         }
 
-        .date { font-size: 20px; font-weight: bold; color: #444; }
-        .venue { margin-top: 8px; font-size: 18px; color: var(--maroon); font-weight: bold; }
-        .address { font-size: 14px; color: #666; margin-top: 5px; }
+        .date { font-size: 22px; font-weight: bold; color: #222; }
+        .venue { font-size: 21px; color: var(--maroon); font-weight: bold; margin-top: 8px; }
+        .location { font-size: 15px; color: #555; margin-top: 5px; }
 
-        /* કંટ્રોલ બટન */
+        /* કંટ્રોલ પેનલ */
         .controls {
             margin-top: 20px;
-            background: white;
+            background: #fff;
             padding: 20px;
             border-radius: 10px;
+            width: 450px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            width: 450px;
+            gap: 15px;
+            box-sizing: border-box;
         }
 
-        input[type="file"] { padding: 10px; border: 1px dashed var(--gold); }
-        
-        .download-btn {
+        .btn-save {
             background-color: var(--maroon);
             color: white;
             border: none;
             padding: 12px;
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: bold;
             cursor: pointer;
             border-radius: 5px;
-            transition: 0.3s;
         }
-
-        .download-btn:hover { background-color: #a00d0d; }
     </style>
 </head>
 <body>
 
-    <div id="invitation-card">
-        <div class="header-bg">
+    <div id="card-container">
+        <img src="https://cdn-icons-png.flaticon.com/512/3362/3362624.png" class="mandala mandala-left">
+        <img src="https://cdn-icons-png.flaticon.com/512/3362/3362624.png" class="mandala mandala-right">
+
+        <div class="header-section">
             <h1>શ્રી સમસ્ત વેકરીયા પરિવાર</h1>
             <h2>કર્ણાવતી</h2>
             <p>દ્વારા આયોજીત પાંચમો સ્નેહ મિલન સમારોહ<br>અને પ્રથમ સમૂહ લગ્ન</p>
         </div>
 
-        <div class="photo-frame">
-            <img id="user-photo" src="" alt="યુઝર ફોટો">
-            <div class="placeholder-text" id="msg">અહીં તમારો ફોટો દેખાશે</div>
+        <div class="profile-frame">
+            <img id="user-img" src="">
+            <div class="placeholder" id="txt">ફોટો અપલોડ કરો</div>
         </div>
 
-        <div class="content">
-            <div class="main-quote">
-                "હું તો આવી રહ્યો છું,<br>તમે શું વિચારો છો?"
-            </div>
+        <div class="content-area">
+            <div class="slogan">"હું તો આવી રહ્યો છું,<br>તમે શું વિચારો છો?"</div>
             
-            <div class="sub-text">
-                પરિવારના ભાઈઓને મળવાનો<br>આવો મોકો નો છોડાય
-            </div>
+            <p class="invite-text">પરિવારના ભાઈઓને મળવાનો<br>આવો મોકો નો છોડાય</p>
 
-            <div class="event-details">
+            <div class="info-box">
                 <div class="date">૫ એપ્રિલ, ૨૦૨૬, રવિવાર, સાંજે ૪ કલાકે</div>
                 <div class="venue">સ્થળ :- રાસલીલા પાર્ટી પ્લોટ</div>
                 <div class="address">પ્લોટ - ૧, ઉદય મોટર્સની પાછળ, રિંગ રોડ, અમદાવાદ</div>
@@ -159,45 +163,34 @@
     </div>
 
     <div class="controls">
-        <label><b>૧. તમારો ફોટો પસંદ કરો:</b></label>
-        <input type="file" id="imageInput" accept="image/*">
-        <button class="download-btn" onclick="downloadImage()">કાર્ડ ડાઉનલોડ કરો</button>
+        <label><b>૧. ફોટો પસંદ કરો:</b></label>
+        <input type="file" id="fileInput" accept="image/*">
+        <button class="btn-save" onclick="saveCard()">ડાઉનલોડ કરો</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
     <script>
-        const imageInput = document.getElementById('imageInput');
-        const userPhoto = document.getElementById('user-photo');
-        const placeholder = document.getElementById('msg');
+        const fileInput = document.getElementById('fileInput');
+        const userImg = document.getElementById('user-img');
+        const txt = document.getElementById('txt');
 
-        // ફોટો અપલોડ હેન્ડલર
-        imageInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    userPhoto.src = event.target.result;
-                    userPhoto.style.display = 'block';
-                    placeholder.style.display = 'none';
-                }
-                reader.readAsDataURL(file);
+        fileInput.onchange = (e) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                userImg.src = reader.result;
+                userImg.style.display = 'block';
+                txt.style.display = 'none';
             }
-        });
+            reader.readAsDataURL(e.target.files[0]);
+        };
 
-        // ઈમેજ ડાઉનલોડ ફંક્શન
-        function downloadImage() {
-            const card = document.getElementById('invitation-card');
-            
-            // html2canvas નો ઉપયોગ કરીને ડાઉનલોડ
-            html2canvas(card, {
-                scale: 2, // હાઈ ક્વોલિટી માટે
-                useCORS: true
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'Vekariya_Parivar_Invitation.png';
-                link.href = canvas.toDataURL("image/png");
-                link.click();
+        function saveCard() {
+            const card = document.getElementById('card-container');
+            html2canvas(card, { scale: 2 }).then(canvas => {
+                const a = document.createElement('a');
+                a.href = canvas.toDataURL("image/png");
+                a.download = 'Vekariya_Parivar_Invitation.png';
+                a.click();
             });
         }
     </script>
